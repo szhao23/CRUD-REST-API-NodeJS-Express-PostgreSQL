@@ -48,3 +48,24 @@ const createUser = (request, response) => {
 };
 
 // PUT updated data in an existing user
+// The /user/:id endpoint will take two HTTP requests, the GET we created for getUserById and a PUT to modify an existing user.
+// We'll combine the GET and POST to use the UPDATE clause
+// PUT is idempotent, meaning the exact same call can be made over and over and will produce the same result.
+// PUT is different than POST, in which the exact same cell repeated will continously make new users with the same data.
+const updateUser = (requst, response) => {
+  const id = parseInt(request.params.id);
+  const { name, email } = request.body;
+
+  pool.query(
+    "UPDATE users SET name = $1, email = $2 WHERE id = $3",
+    [name, email, id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(200).send(`User modified with the ID: ${id}`);
+    }
+  );
+};
+
+// DELETE A USER
