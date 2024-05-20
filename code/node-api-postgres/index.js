@@ -25,6 +25,11 @@ app.listen(port, () => {
 // Next step is to connect to PostgreSQL from Node.JS to be able to make dynamic queries
 
 // Connecting to Postgres Database from Node.JS
-
-
-
+const Pool = require("pg").Pool;
+const pool = new Pool({
+  user: "shz",
+  host: "localhost",
+  database: "api",
+  password: process.env.POSTGRES_PW,
+  port: 5432,
+});
