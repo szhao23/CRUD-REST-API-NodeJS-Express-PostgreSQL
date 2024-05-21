@@ -69,3 +69,14 @@ const updateUser = (requst, response) => {
 };
 
 // DELETE A USER
+// Delete Clause on /users/:id to delete a specific user by ID, similar to getUserById() function
+const deleteUser = (request, response) => {
+  const id = parseInt(request.params.id);
+
+  pool.query("DELETE FROM users WHERE id = $1", [id], (error, results) => {
+    if (error) {
+      throw error;
+    }
+    response.status(200).send(`User deleted with the ID: ${id}`);
+  });
+};
