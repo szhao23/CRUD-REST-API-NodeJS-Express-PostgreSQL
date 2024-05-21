@@ -80,3 +80,13 @@ const deleteUser = (request, response) => {
     response.status(200).send(`User deleted with the ID: ${id}`);
   });
 };
+
+// Exporting CRUD functions in a REST API
+// In order to access these functions from index.js, we'll need to export them. We can do this by using module.exports
+module.exports = {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+};
