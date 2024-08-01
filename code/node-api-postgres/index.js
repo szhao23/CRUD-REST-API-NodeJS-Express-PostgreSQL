@@ -24,12 +24,13 @@ app.listen(port, () => {
 // Express Server is running, however is only sending static JSON data that we created
 // Next step is to connect to PostgreSQL from Node.JS to be able to make dynamic queries
 
-// Connecting to Postgres Database from Node.JS
-const Pool = require("pg").Pool;
-const pool = new Pool({
-  user: "shz",
-  host: "localhost",
-  database: "api",
-  password: process.env.POSTGRES_PW,
-  port: 5432,
-});
+// Now that we have all of our queries, we need to pull them into index.js and make endpoint routes for all the query functions created.
+// To get all the exported functions from queries.js, we'll require the file and assign it to a variable:
+const db = require("./queries");
+
+// Now, for each endpoint, we'll se the HTTP request method, the endpoint URL, and the relevant function:
+app.get("/users", db.getUsers);
+app.get("/users/:id", db.getUserById);
+app.post("/users", db.createUser);
+app.put("/users/:id", db.updateUser);
+app.delete("/users/:id", db.deleteUser);
